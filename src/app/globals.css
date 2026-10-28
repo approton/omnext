@@ -89,7 +89,7 @@ a {
 main {
   perspective: 1500px;
   perspective-origin: 50% 20%;
-  transform-style: preserve-3d;
+  transform-style: flat;
 }
 main > section,
 main > header {

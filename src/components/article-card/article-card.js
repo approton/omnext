@@ -4,6 +4,12 @@ export default function ArticleCard({ article }) {
   return (
     <article className={styles.card} data-reveal data-interactive data-tilt data-depth="2">
       <Link
+        className={styles.cardLink}
+        href={`/blog/${article.slug}`}
+        aria-label={`Read ${article.title}`}
+        tabIndex={-1}
+      />
+      <Link
         className={styles.art}
         href={`/blog/${article.slug}`}
         aria-label={`Read ${article.title}`}
@@ -17,9 +23,7 @@ export default function ArticleCard({ article }) {
           <span>{article.category}</span>
           <span>{article.readTime}</span>
         </div>
-        <h3>
-          <Link href={`/blog/${article.slug}`}>{article.title}</Link>
-        </h3>
+        <h3>{article.title}</h3>
         <p>{article.description}</p>
         <Link className={styles.read} href={`/blog/${article.slug}`}>
           Read insight <b aria-hidden="true">→</b>
