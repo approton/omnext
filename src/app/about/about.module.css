@@ -1,0 +1,159 @@
+.story {
+  padding-block: 95px;
+}
+.storyGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 70px;
+}
+.storyGrid h2 {
+  max-width: 470px;
+  margin: 15px 0 0;
+  font-size: clamp(2.2rem, 4.3vw, 3.7rem);
+  letter-spacing: -0.065em;
+  line-height: 1.03;
+}
+.storyGrid > div:last-child {
+  max-width: 610px;
+  padding-top: 14px;
+}
+.storyGrid p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.85;
+}
+.mission {
+  padding-block: 72px;
+  background: var(--inverse-surface);
+  color: var(--inverse-text);
+}
+.mission p {
+  max-width: 950px;
+  margin: 18px 0 0;
+  font-size: clamp(2.2rem, 5vw, 4.6rem);
+  font-weight: 650;
+  letter-spacing: -0.07em;
+  line-height: 1.05;
+}
+.mission em {
+  color: var(--brand);
+  font-style: normal;
+}
+.values {
+  padding-block: 92px 100px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 36px;
+}
+.grid article {
+  min-height: 220px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.grid article > span {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.grid h3 {
+  margin: 28px 0 9px;
+  font-size: 1.08rem;
+  line-height: 1.3;
+}
+.grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+.way {
+  padding-block: 80px;
+  background: var(--surface-muted);
+}
+.wayGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 68px;
+}
+.wayGrid h2 {
+  margin: 14px 0 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+}
+.wayGrid h2 em {
+  color: var(--teal);
+  font-style: normal;
+}
+.wayGrid p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.art {
+  display: grid;
+  gap: 12px;
+  padding: 32px;
+  border-radius: 24px;
+  background: var(--surface-muted);
+  transform: rotate(-3deg);
+}
+.art span {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  padding-inline: 18px;
+  border: 1px solid color-mix(in srgb, var(--teal) 20%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+.art span:nth-child(2) {
+  margin-left: 10%;
+}
+.art span:nth-child(3) {
+  margin-left: 20%;
+  background: var(--brand);
+}
+@media (max-width: 850px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .storyGrid,
+  .wayGrid {
+    gap: 34px;
+  }
+}
+@media (max-width: 620px) {
+  .story {
+    padding-block: 68px;
+  }
+  .storyGrid,
+  .wayGrid {
+    grid-template-columns: 1fr;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .grid article {
+    min-height: auto;
+  }
+  .grid h3 {
+    margin-top: 17px;
+  }
+  .mission {
+    padding-block: 58px;
+  }
+  .way {
+    padding-block: 62px;
+  }
+}

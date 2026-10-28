@@ -1,0 +1,103 @@
+.card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transform: perspective(1000px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transform-style: preserve-3d;
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms ease;
+}
+.card:hover,
+.card:focus-within {
+  transform: perspective(1000px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg))
+    translateY(-5px);
+  box-shadow: var(--shadow);
+}
+.art {
+  position: relative;
+  display: flex;
+  height: 180px;
+  align-items: flex-start;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 18px;
+  background: var(--surface-muted);
+}
+.art > span {
+  position: relative;
+  z-index: 1;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+.art i {
+  position: absolute;
+  top: 12px;
+  right: 28px;
+  width: 145px;
+  height: 145px;
+  border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent);
+  border-radius: 50%;
+  transform: scaleY(0.68);
+  animation: omnext-card-orbit 9s linear infinite;
+}
+.art i::before,
+.art i::after {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+  border-radius: 50%;
+  content: "";
+  transform: scaleY(0.72);
+  animation: omnext-card-orbit 6s linear infinite reverse;
+}
+.art i::after {
+  inset: 38px;
+  background: var(--brand);
+  animation: omnext-satellite-flash 2.7s ease-in-out infinite;
+}
+.art small {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  color: color-mix(in srgb, var(--ink) 65%, transparent);
+  font-size: 0.64rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+.body {
+  padding: 21px 22px 23px;
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+.body h3 {
+  margin: 14px 0 8px;
+  font-size: 1.25rem;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+.body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.read {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--teal);
+  font-size: 0.83rem;
+  font-weight: 750;
+}

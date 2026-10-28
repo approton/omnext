@@ -1,0 +1,70 @@
+.methods {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin: 0 0 17px;
+  padding: 0;
+  list-style: none;
+}
+
+.method {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 9px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+}
+
+.icon {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--teal);
+  font-size: 0.96rem;
+  font-weight: 850;
+}
+
+.copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.copy strong,
+.copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy strong {
+  color: var(--ink);
+  font-size: 0.68rem;
+}
+
+.copy small {
+  color: var(--muted);
+  font-size: 0.58rem;
+}
+
+@media (max-width: 440px) {
+  .methods {
+    grid-template-columns: 1fr;
+  }
+
+  .method {
+    padding: 9px 11px;
+  }
+
+  .copy strong,
+  .copy small {
+    white-space: normal;
+  }
+}

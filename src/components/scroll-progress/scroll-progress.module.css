@@ -1,0 +1,18 @@
+.progress {
+  position: fixed;
+  z-index: 40;
+  top: 0;
+  left: 0;
+  width: var(--scroll-progress, 0%);
+  height: 3px;
+  background: linear-gradient(90deg, #1c5b53, #c9f36a 82%);
+  box-shadow: 0 0 14px rgba(201, 243, 106, 0.58);
+  pointer-events: none;
+  transition: width 100ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    transition: none;
+  }
+}

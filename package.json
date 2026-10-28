@@ -1,0 +1,23 @@
+{
+  "name": "omnext-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.{js,jsx,mjs,json,css,md,svg}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,mjs,json,css,md,svg}\""
+  },
+  "dependencies": {
+    "next": "16.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "16.4.3",
+    "prettier": "^3.9.10"
+  }
+}

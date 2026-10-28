@@ -1,0 +1,25 @@
+.heading {
+  max-width: 660px;
+}
+.heading h2 {
+  margin: 13px 0 0;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-weight: 720;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.heading p {
+  max-width: 590px;
+  margin: 17px 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+.centered {
+  margin-inline: auto;
+  text-align: center;
+}
+.centered p {
+  margin-inline: auto;
+}

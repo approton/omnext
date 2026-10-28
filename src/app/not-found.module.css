@@ -1,0 +1,44 @@
+.page {
+  display: grid;
+  min-height: 54vh;
+  align-items: center;
+  padding-block: 70px;
+  background: var(--surface-muted);
+}
+.page h1 {
+  max-width: 740px;
+  margin: 14px 0 0;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -0.075em;
+  line-height: 1;
+}
+.page p {
+  max-width: 570px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 1.04rem;
+}
+.page > div > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  margin-top: 28px;
+}
+.primary {
+  display: inline-flex;
+  gap: 20px;
+  align-items: center;
+  padding: 14px 19px;
+  border-radius: 99px;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  font-weight: 700;
+}
+.primary span {
+  color: var(--button-primary-text);
+}
+.secondary {
+  color: var(--teal);
+  font-weight: 700;
+}
