@@ -95,9 +95,34 @@
 }
 .read {
   display: inline-flex;
+  min-height: 44px;
+  align-items: center;
   gap: 8px;
-  margin-top: 18px;
+  margin: 10px 0 -10px -10px;
+  padding: 10px;
+  border-radius: 10px;
   color: var(--teal);
   font-size: 0.83rem;
   font-weight: 750;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+.read:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--teal) 12%, transparent);
+  transform: translateX(3px);
+}
+.read:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.read b {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+.read:hover b {
+  transform: translateX(3px);
 }
