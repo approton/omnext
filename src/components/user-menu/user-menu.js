@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "../auth-provider/auth-provider";
 import { useTheme } from "../theme-provider/theme-provider";
 import { getSafeReturnPath } from "../../features/auth/return-path";
@@ -20,7 +19,6 @@ export default function UserMenu() {
   const menuRef = useRef(null);
   const { theme, setTheme } = useTheme();
   const { session, ready, busy, error, setError, startGuestSession, signOut } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
     if (!open) return undefined;
@@ -49,14 +47,13 @@ export default function UserMenu() {
   }, [session]);
 
   async function enterAsGuest() {
-    const defaultPath = ["/", "/login", "/signup"].includes(window.location.pathname)
-      ? "/products"
-      : window.location.pathname;
-    const destination = getSafeReturnPath(window.location.search, defaultPath);
+    const destination = ["/login", "/signup"].includes(window.location.pathname)
+      ? getSafeReturnPath(window.location.search)
+      : null;
 
     if (await startGuestSession()) {
       setOpen(false);
-      window.location.assign(destination);
+      if (destination) window.location.assign(destination);
     }
   }
 

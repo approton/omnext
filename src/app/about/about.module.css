@@ -123,6 +123,7 @@
 .art span:nth-child(3) {
   margin-left: 20%;
   background: var(--brand);
+  color: var(--brand-ink);
 }
 @media (max-width: 850px) {
   .grid {
