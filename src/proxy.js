@@ -1,16 +1,6 @@
 import { NextResponse } from "next/server";
 import { readSessionToken, SESSION_COOKIE } from "./features/auth/server/session";
-const PUBLIC_PATHS = new Set([
-  "/",
-  "/about",
-  "/blog",
-  "/contact",
-  "/search",
-  "/website-development",
-  "/software-development",
-  "/login",
-  "/signup",
-]);
+import { isPublicPage } from "./features/auth/route-access";
 const PUBLIC_API_PATHS = new Set([
   "/api/v1/health",
   "/api/v1/auth/login",
@@ -24,11 +14,7 @@ const PUBLIC_API_PATHS = new Set([
 
 export function proxy(request) {
   const { pathname, search } = request.nextUrl;
-  if (
-    PUBLIC_PATHS.has(pathname) ||
-    pathname.startsWith("/blog/") ||
-    PUBLIC_API_PATHS.has(pathname)
-  ) {
+  if (isPublicPage(pathname) || PUBLIC_API_PATHS.has(pathname)) {
     return NextResponse.next();
   }
 

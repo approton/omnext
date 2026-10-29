@@ -1,11 +1,11 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { isPublicPage } from "../../features/auth/route-access";
 
 const AuthContext = createContext(null);
 const API_BASE = "/api/v1";
-const PUBLIC_PATHS = new Set(["/", "/login", "/signup"]);
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const pathname = usePathname();
-  const router = useRouter();
 
   const refreshSession = useCallback(async () => {
     try {
@@ -35,25 +34,39 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     queueMicrotask(refreshSession);
+    const onPageShow = (event) => {
+      // Browser Back can restore a document from before login/logout, including its old state.
+      if (event.persisted) window.location.reload();
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
   }, [refreshSession]);
+
+  useEffect(() => {
+    if (!ready || session || isPublicPage(pathname)) return;
+    const returnPath = window.location.pathname + window.location.search + window.location.hash;
+    window.location.replace(`/login?next=${encodeURIComponent(returnPath)}`);
+  }, [pathname, ready, session]);
 
   useEffect(() => {
     if (!ready || !session?.expiresAt) return undefined;
     const expiryDelay = new Date(session.expiresAt).getTime() - Date.now();
-    if (expiryDelay <= 0) {
-      if (!PUBLIC_PATHS.has(pathname))
-        router.replace(`/login?next=${encodeURIComponent(pathname)}`);
-      const expiredSessionTimer = window.setTimeout(() => setSession(null), 0);
-      return () => window.clearTimeout(expiredSessionTimer);
-    }
-
-    const expiryTimer = window.setTimeout(() => {
-      setSession(null);
-      if (!PUBLIC_PATHS.has(pathname))
-        router.replace(`/login?next=${encodeURIComponent(pathname)}`);
-    }, expiryDelay);
+    const expiryTimer = window.setTimeout(
+      () => {
+        setSession(null);
+        // Expiry also invalidates previously visited/prefetched protected routes.
+        if (isPublicPage(window.location.pathname)) {
+          window.location.reload();
+        } else {
+          const returnPath =
+            window.location.pathname + window.location.search + window.location.hash;
+          window.location.replace(`/login?next=${encodeURIComponent(returnPath)}`);
+        }
+      },
+      Math.max(0, expiryDelay),
+    );
     return () => window.clearTimeout(expiryTimer);
-  }, [pathname, ready, router, session]);
+  }, [pathname, ready, session]);
 
   const startGuestSession = useCallback(async () => {
     setBusy(true);
@@ -85,23 +98,44 @@ export function AuthProvider({ children }) {
   }, [refreshSession]);
 
   const signOut = useCallback(async () => {
+    setBusy(true);
+    setError("");
     try {
-      await fetch(`${API_BASE}/auth/logout`, {
+      const response = await fetch(`${API_BASE}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
+      if (!response.ok) throw new Error("Logout failed");
+      // A Route Handler clears the cookie, but does not invalidate cached client routes.
+      // Start a new document so previously visited protected pages cannot be reused.
+      window.location.replace("/");
+    } catch {
+      setError("We couldn’t end your session. Please try again.");
     } finally {
-      setSession(null);
-      router.replace("/");
+      setBusy(false);
     }
-  }, [router]);
+  }, []);
 
   const value = useMemo(
     () => ({ session, ready, busy, error, setError, startGuestSession, signOut, refreshSession }),
     [session, ready, busy, error, startGuestSession, signOut, refreshSession],
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // Cached/history navigation can bypass Proxy. Never display a protected page
+  // until the session endpoint has confirmed access for this document.
+  const checkingAccess = !isPublicPage(pathname) && (!ready || !session);
+
+  return (
+    <AuthContext.Provider value={value}>
+      {checkingAccess ? (
+        <main id="main-content" className="container" role="status" aria-live="polite">
+          <p>Checking your session…</p>
+        </main>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

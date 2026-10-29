@@ -53,7 +53,8 @@ export default function UserMenu() {
 
     if (await startGuestSession()) {
       setOpen(false);
-      if (destination) window.location.assign(destination);
+      // Drop prefetched anonymous redirects when the session cookie changes.
+      window.location.replace(destination || window.location.href);
     }
   }
 
@@ -141,8 +142,8 @@ export default function UserMenu() {
           </div>
 
           {session && (
-            <button className={styles.signOut} type="button" onClick={signOut}>
-              End session <span aria-hidden="true">→</span>
+            <button className={styles.signOut} type="button" disabled={busy} onClick={signOut}>
+              {busy ? "Ending session…" : "End session"} <span aria-hidden="true">→</span>
             </button>
           )}
         </section>
